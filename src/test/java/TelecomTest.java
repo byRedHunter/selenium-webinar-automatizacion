@@ -4,6 +4,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class TelecomTest extends DriverConnection {
@@ -94,5 +95,22 @@ public class TelecomTest extends DriverConnection {
         Alert alert = driver.switchTo().alert();
         Assert.assertEquals("please fill all fields", alert.getText());
         alert.dismiss();
+    }
+
+    @Test
+    public void selectComboBoxValue() {
+        driver.get("https://demo.guru99.com/payment-gateway/index.php");
+
+        WebElement selectQuantity = driver.findElement(By.name("quantity"));
+        wait.until(ExpectedConditions.visibilityOf(selectQuantity));
+        new Select(selectQuantity).selectByVisibleText("4");
+
+        WebElement submit = driver.findElement(By.xpath("//*[@id=\"three\"]/div/form/div/div[8]/ul/li/input"));
+        wait.until(ExpectedConditions.elementToBeClickable(submit));
+        submit.click();
+
+        /*WebElement successProcess = driver.findElement(By.xpath("//*[@id=\"three\"]/div/header/h2"));
+        wait.until(ExpectedConditions.visibilityOf(successProcess));
+        successProcess.isDisplayed();*/
     }
 }
